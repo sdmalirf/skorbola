@@ -1,0 +1,18 @@
+{
+  "name": "fano",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+     "build": "npx tailwindcss -i ./resources/css/styles.css -o ./public/css/styles.css --minify",
+      "watch": "npx tailwindcss -i ./resources/css/styles.css -o ./public/css/styles.css --watch"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.16"
+  }
+}
