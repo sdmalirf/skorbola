@@ -20,16 +20,18 @@ $result = mysqli_query($koneksi, $sql);
     <link href="public/css/styles.css" rel="stylesheet">
 </head>
 
-<body class="bg-gray-100 w-full mx-auto text-gray-800 p-5 overflow-x-hidden ">
-    <nav class="bg-white w-3/4 mx-auto flex justify-between items-center px-6 py-4 rounded-lg">
+<body class="bg-gray-100 w-full min-h-screen mx-auto text-gray-800 p-5 overflow-x-hidden relative ">
+    <nav class="bg-white w-3/4 mx-auto border-2 border-black flex justify-between items-center px-6 py-4 rounded-md">
         <div class="text-xl font-bold">Hasil Pertandingan Bola</div>
     </nav>
-    <img src="./background.jpg" alt="" class="absolute top-0 left-0 object-cover -z-10">
+    <img src="./bg-dashboard.jpg" alt="" class="absolute top-0 left-0 object-cover -z-10">
+    <img src="./ball.png" alt="" class="fixed -bottom-10 -left-24 w-[256px]">
+    <img src="./field.png" alt="" class="fixed -bottom-28 -right-24 w-[516px]">
 
 
     <div class="flex flex-col w-3/4 mx-auto mt-4">
         <?php while ($match = mysqli_fetch_assoc($result)) : ?>
-            <div class="flex w-full py-4 px-8 bg-white mb-4 rounded-lg shadow-md">
+            <div class="flex w-full py-4 px-8 bg-white mb-4 border-2 border-black rounded-lg shadow-md">
                 <!-- Logo Tim 1 -->
                 <div class="flex items-center">
                     <!-- <img src="uploads/<?php echo htmlspecialchars($match['team1_logo']); ?>" alt="Logo Tim 1" class="w-12 h-12 mr-4"> -->
@@ -55,7 +57,7 @@ $result = mysqli_query($koneksi, $sql);
 
                 <!-- Tanggal Pertandingan -->
                 <div class="flex w-full justify-end items-center">
-                    <p class="text-sm text-gray-600"><?php echo date('d-m-Y', strtotime($match['match_date'])); ?></p>
+                    <p class="text-lg text-gray-600"><?php echo date('d-m-Y', strtotime($match['match_date'])); ?></p>
                 </div>
             </div>
         <?php endwhile; ?>

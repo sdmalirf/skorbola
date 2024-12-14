@@ -217,10 +217,11 @@ $result_match = mysqli_query($koneksi, $sql_match);
             background-color: #fefefe;
             margin: 10% auto;
             padding: 20px;
-            border: 1px solid #888;
+            border: 3px solid black;
             width: 80%;
             max-width: 500px;
             border-radius: 8px;
+
         }
 
         .close {
@@ -241,8 +242,10 @@ $result_match = mysqli_query($koneksi, $sql_match);
 
 <body class="bg-gray-100 w-full text-gray-800 p-5 overflow-x-hidden">
     <img src="./bg-dashboard.jpg" alt="" class="absolute top-0 left-0 object-cover w-full -z-10">
-    <nav class="bg-white w-full flex justify-between items-center px-6 py-4 rounded-lg">
-        <div class="text-xl font-bold">Selamat datang, <?php echo htmlspecialchars($username); ?></div>
+    <img src="./jersey.png" alt="" class="fixed -bottom-10 -left-24 w-[256px]">
+    <img src="./card.png" alt="" class="fixed -bottom-16 -right-10 -rotate-12 w-[256px]">
+    <nav class="w-full border-2 bg-white border-black flex justify-between items-center px-6 py-4 rounded-md">
+        <div class="text-xl font-bold">Selamat Datang, <?php echo htmlspecialchars($username); ?></div>
         <div>
             <a href="logout.php" class="px-4 py-2 bg-red-500 text-white rounded">Logout</a>
         </div>
@@ -251,16 +254,16 @@ $result_match = mysqli_query($koneksi, $sql_match);
     <div class="flex items-center w-full justify-between mt-4">
         <!-- Search Form -->
         <form action="" method="POST" class="mb-4 flex w-1/2 gap-2 justify-center items-center">
-            <input type="text" name="search_term" placeholder="Cari Pertanding..." class="w-full p-2 border rounded" value="<?php echo htmlspecialchars($search_term); ?>">
-            <button type="submit" class="px-4 py-2 bg-white font-semibold text-black rounded">Cari</button>
+            <input type="text" name="search_term" placeholder="Cari Pertanding..." class="w-full py-2 px-4 border-2 rounded border-black" value="<?php echo htmlspecialchars($search_term); ?>">
+            <button type="submit" class="px-4 py-2 bg-white font-semibold  border-2 border-black rounded">Cari</button>
         </form>
         <div>
-            <button id="openModal" class="px-4 py-2 bg-white font-semibold text-black rounded mb-4" onclick="openModal('add')">Tambah Tim Sepak Bola</button>
-            <button id="openMatchModal" class="px-4 py-2 bg-white font-semibold text-black rounded mb-4" onclick="openModal('add_match')">Tambah Pertandingan</button>
+            <button id="openModal" class="px-4 py-2 bg-white font-semibold border-2 border-black text-black rounded mb-4" onclick="openModal('add')">Tambah Tim Sepak Bola</button>
+            <button id="openMatchModal" class="px-4 py-2 bg-white font-semibold border-2 border-black text-black rounded mb-4" onclick="openModal('add_match')">Tambah Pertandingan</button>
         </div>
     </div>
 
-    <div class="w-full mx-auto rounded-xl overflow-hidden">
+    <div class="w-full mx-auto rounded-xl ">
         <!-- Add Tim Modal -->
         <div id="addModal" class="modal">
             <div class="modal-content">
@@ -279,75 +282,16 @@ $result_match = mysqli_query($koneksi, $sql_match);
                         <label for="logo" class="block font-medium">Logo</label>
                         <input type="file" id="logo" name="logo" class="w-full p-2 border rounded">
                     </div>
-                    <button type="submit" name="simpan_tim" class="px-4 py-2 bg-green-500 text-white rounded">Simpan Data</button>
+                    <button type="submit" name="simpan_tim" class="px-4 py-2 border-green-600 border-2 font-semibold text-green-600 rounded">Simpan Data</button>
                 </form>
             </div>
         </div>
 
         <!-- Edit Match Modal -->
-        <div id="editModal" class="modal">
+        <div id="editModal" class="modal border-2 border-black">
             <div class="modal-content">
                 <span class="close" onclick="closeModal('edit')">&times;</span>
                 <h3 class="text-xl font-bold mb-4">Edit Pertandingan</h3>
-                <!-- <form action="" method="POST">
-                    <input type="hidden" name="id" value="<?php echo $id; ?>">
-
-                    <label for="team1_id" class="block font-medium">Tim 1</label>
-                    <select name="team1_id" id="team1_id" class="w-full p-2 border rounded" required>
-                        <option value="">Pilih Tim 1</option>
-                        <?php
-                        $result_tim = mysqli_query($koneksi, "SELECT * FROM football_teams");
-                        while ($team = mysqli_fetch_assoc($result_tim)) :
-                        ?>
-                            <option value="<?php echo $team['id']; ?>"
-                                <?php echo (isset($team1_id) && $team1_id == $team['id']) ? 'selected' : ''; ?>>
-                                <?php echo htmlspecialchars($team['team_name']); ?>
-                            </option>
-                        <?php endwhile; ?>
-                    </select>
-
-                    <label for="score_team1" class="block font-medium">Skor Tim 1</label>
-                    <input type="number" id="score_team1" name="score_team1" class="w-full p-2 border rounded"
-                        value="<?php echo htmlspecialchars($score_team1); ?>" required>
-
-                    <label for="team2_id" class="block font-medium">Tim 2</label>
-                    <select name="team2_id" id="team2_id" class="w-full p-2 border rounded" required>
-                        <option value="">Pilih Tim 2</option>
-                        <?php
-                        mysqli_data_seek($result_tim, 0);
-                        while ($team = mysqli_fetch_assoc($result_tim)) :
-                        ?>
-                            <option value="<?php echo $team['id']; ?>"
-                                <?php echo ($team2_id == $team['id']) ? 'selected' : ''; ?>>
-                                <?php echo htmlspecialchars($team['team_name']); ?>
-                            </option>
-                        <?php endwhile; ?>
-                    </select>
-
-                    <label for="score_team2" class="block font-medium">Skor Tim 2</label>
-                    <input type="number" id="score_team2" name="score_team2" class="w-full p-2 border rounded"
-                        value="<?php echo htmlspecialchars($score_team2); ?>" required>
-
-                    <label for="match_date" class="block font-medium">Tanggal Pertandingan</label>
-                    <input type="date" id="match_date" name="match_date" class="w-full p-2 border rounded"
-                        value="<?php echo htmlspecialchars($match_date); ?>" required>
-
-                    <label for="stadium" class="block font-medium">Stadion</label>
-                    <select id="stadium" name="stadium" class="w-full p-2 border rounded" required>
-                        <option value="">Pilih Stadion</option>
-                        <?php
-                        mysqli_data_seek($result_tim, 0);
-                        while ($team = mysqli_fetch_assoc($result_tim)) :
-                        ?>
-                            <option value="<?php echo htmlspecialchars($team['stadium']); ?>"
-                                <?php echo ($stadium == $team['stadium']) ? 'selected' : ''; ?>>
-                                <?php echo htmlspecialchars($team['stadium']); ?>
-                            </option>
-                        <?php endwhile; ?>
-                    </select>
-
-                    <button type="submit" name="simpan_match" class="px-4 py-2 bg-green-500 text-white rounded">Simpan Pertandingan</button>
-                </form> -->
                 <form action="" method="POST">
                     <input type="hidden" id="edit_match_id" name="id" value="<?php echo $id; ?>">
 
@@ -402,7 +346,7 @@ $result_match = mysqli_query($koneksi, $sql_match);
                         <?php endwhile; ?>
                     </select>
 
-                    <button type="submit" name="simpan_match" class="mt-4 px-4 py-2 bg-green-500 text-white rounded">Simpan Pertandingan</button>
+                    <button type="submit" name="simpan_match" class="mt-4 px-4 py-2 border-green-600 border-2 font-semibold text-green-600 rounded">Simpan Pertandingan</button>
                 </form>
             </div>
         </div>
@@ -491,15 +435,15 @@ $result_match = mysqli_query($koneksi, $sql_match);
                         </select>
                     </div>
 
-                    <button type="submit" name="simpan_match" class="px-4 py-2 bg-green-500 text-white rounded">Simpan Pertandingan</button>
+                    <button type="submit" name="simpan_match" class="px-4 py-2 border-green-600 border-2 font-semibold text-green-600 rounded">Simpan Pertandingan</button>
                 </form>
             </div>
         </div>
 
 
-        <table class="bg-white w-full mt-4 rounded-lg shadow-md">
-            <thead class="bg-gray-800 text-white">
-                <tr>
+        <table class="bg-white w-full rounded-lg border-2 border-black ">
+            <thead class=" text-black font-semibold border-b-2 border-black">
+                <tr class="font-semibold">
                     <th class="p-4">#</th>
                     <th class="p-4">Tim 1</th>
                     <th class="p-4">Tim 2</th>
@@ -513,7 +457,7 @@ $result_match = mysqli_query($koneksi, $sql_match);
                 <?php if ($result_match) : ?>
                     <?php $no = 1; ?>
                     <?php while ($row = mysqli_fetch_assoc($result_match)) : ?>
-                        <tr>
+                        <tr class="font-semibold">
                             <td class="p-4 text-center"><?php echo $no++; ?></td>
                             <td class="p-4 text-center"><?php echo htmlspecialchars($row['team1_name']); ?></td>
                             <td class="p-4 text-center"><?php echo htmlspecialchars($row['team2_name']); ?></td>
@@ -521,8 +465,8 @@ $result_match = mysqli_query($koneksi, $sql_match);
                             <td class="p-4 text-center"><?php echo htmlspecialchars($row['stadium']); ?></td>
                             <td class="p-4 text-center"><?php echo htmlspecialchars($row['match_date']); ?></td>
                             <td class="p-4 text-center">
-                                <button onclick="openModal('edit', <?php echo $row['id']; ?>)" class="px-4 py-2 bg-yellow-500 text-white rounded">Edit</button>
-                                <a href="dashboard.php?op=delete&id=<?php echo $row['id']; ?>" class="px-4 py-2 bg-red-500 text-white rounded" onclick="return confirm('Yakin ingin menghapus data?');">Delete</a>
+                                <button onclick="openModal('edit', <?php echo $row['id']; ?>)" class="px-4 py-2 text-black border-2 border-yellow-400 rounded">Edit</button>
+                                <a href="dashboard.php?op=delete&id=<?php echo $row['id']; ?>" class="px-4 py-2 border-2 border-red-500 text-black rounded" onclick="return confirm('Yakin ingin menghapus data?');">Delete</a>
                             </td>
                         </tr>
                     <?php endwhile; ?>
